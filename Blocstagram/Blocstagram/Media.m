@@ -1,13 +1,14 @@
 //
-//  ImagesTableViewController.h
+//  Media.m
 //  Blocstagram
 //
 //  Created by Weinan Qiu on 2015-08-25.
 //  Copyright (c) 2015 Bloc. All rights reserved.
 //
 
-#import <UIKit/UIKit.h>
+#import "Media.h"
+#import "User.h"
 
-@interface ImagesTableViewController : UITableViewController
+@implementation Media
 
 @end
