@@ -38,7 +38,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return [DataSource sharedInstance].mediaItems.count;
+    return [self items].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -56,14 +56,14 @@
         [cell.contentView addSubview:imageView];
     }
     
-    Media *media = [DataSource sharedInstance].mediaItems[indexPath.row];
+    Media *media = [self items][indexPath.row];
     imageView.image = media.image;
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    Media *media = [DataSource sharedInstance].mediaItems[indexPath.row];
+    Media *media = [self items][indexPath.row];
     return (CGRectGetWidth(self.view.frame) / media.image.size.width) * media.image.size.height;
 }
 
@@ -111,5 +111,11 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Misc
+
+- (NSArray *)items {
+    return [DataSource sharedInstance].mediaItems;
+}
 
 @end
