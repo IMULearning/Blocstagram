@@ -28,6 +28,9 @@
 		9A17536D1B8D224C00A5A172 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17536C1B8D224C00A5A172 /* Comment.m */; };
 		9A1753701B8D228B00A5A172 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17536F1B8D228B00A5A172 /* DataSource.m */; };
 		9A1753731B8D2A2200A5A172 /* MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1753721B8D2A2200A5A172 /* MediaTableViewCell.m */; };
+		9A1753761B8E3E3200A5A172 /* MediaCommentsView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1753751B8E3E3200A5A172 /* MediaCommentsView.m */; };
+		9A1753791B8E41ED00A5A172 /* StyleBootstrap.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1753781B8E41ED00A5A172 /* StyleBootstrap.m */; };
+		9A17537C1B8E453300A5A172 /* LayoutUtility.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17537B1B8E453300A5A172 /* LayoutUtility.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +76,12 @@
 		9A17536F1B8D228B00A5A172 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
 		9A1753711B8D2A2200A5A172 /* MediaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaTableViewCell.h; sourceTree = "<group>"; };
 		9A1753721B8D2A2200A5A172 /* MediaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCell.m; sourceTree = "<group>"; };
+		9A1753741B8E3E3200A5A172 /* MediaCommentsView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaCommentsView.h; sourceTree = "<group>"; };
+		9A1753751B8E3E3200A5A172 /* MediaCommentsView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaCommentsView.m; sourceTree = "<group>"; };
+		9A1753771B8E41ED00A5A172 /* StyleBootstrap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StyleBootstrap.h; sourceTree = "<group>"; };
+		9A1753781B8E41ED00A5A172 /* StyleBootstrap.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StyleBootstrap.m; sourceTree = "<group>"; };
+		9A17537A1B8E453300A5A172 /* LayoutUtility.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LayoutUtility.h; sourceTree = "<group>"; };
+		9A17537B1B8E453300A5A172 /* LayoutUtility.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LayoutUtility.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -119,6 +128,8 @@
 				9A1753161B8D145900A5A172 /* AppDelegate.m */,
 				9A1753711B8D2A2200A5A172 /* MediaTableViewCell.h */,
 				9A1753721B8D2A2200A5A172 /* MediaTableViewCell.m */,
+				9A1753741B8E3E3200A5A172 /* MediaCommentsView.h */,
+				9A1753751B8E3E3200A5A172 /* MediaCommentsView.m */,
 				9A1753621B8D178200A5A172 /* ImagesTableViewController.h */,
 				9A1753631B8D178200A5A172 /* ImagesTableViewController.m */,
 				9A1753651B8D217300A5A172 /* User.h */,
@@ -132,6 +143,10 @@
 				9A17531E1B8D145900A5A172 /* Images.xcassets */,
 				9A1753201B8D145900A5A172 /* LaunchScreen.xib */,
 				9A1753111B8D145900A5A172 /* Supporting Files */,
+				9A1753771B8E41ED00A5A172 /* StyleBootstrap.h */,
+				9A1753781B8E41ED00A5A172 /* StyleBootstrap.m */,
+				9A17537A1B8E453300A5A172 /* LayoutUtility.h */,
+				9A17537B1B8E453300A5A172 /* LayoutUtility.m */,
 			);
 			path = Blocstagram;
 			sourceTree = "<group>";
@@ -291,11 +306,14 @@
 				9A1753671B8D217300A5A172 /* User.m in Sources */,
 				9A17536D1B8D224C00A5A172 /* Comment.m in Sources */,
 				9A1753731B8D2A2200A5A172 /* MediaTableViewCell.m in Sources */,
+				9A1753761B8E3E3200A5A172 /* MediaCommentsView.m in Sources */,
 				9A17536A1B8D21ED00A5A172 /* Media.m in Sources */,
 				9A1753171B8D145900A5A172 /* AppDelegate.m in Sources */,
+				9A1753791B8E41ED00A5A172 /* StyleBootstrap.m in Sources */,
 				9A1753701B8D228B00A5A172 /* DataSource.m in Sources */,
 				9A1753141B8D145900A5A172 /* main.m in Sources */,
 				9A1753641B8D178200A5A172 /* ImagesTableViewController.m in Sources */,
+				9A17537C1B8E453300A5A172 /* LayoutUtility.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
