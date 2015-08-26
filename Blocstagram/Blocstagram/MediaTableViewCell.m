@@ -48,7 +48,9 @@ static NSParagraphStyle *paragraphStyle;
 #pragma mark - Helper
 
 + (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width {
-    MediaTableViewCell *layoutCell = [[MediaTableViewCell alloc] initWithFrame:CGRectMake(0, 0, width, CGFLOAT_MAX)];
+    MediaTableViewCell *layoutCell = [[MediaTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault
+                                                               reuseIdentifier:@"layoutCell"];
+    layoutCell.frame = CGRectMake(0, 0, width, CGFLOAT_MAX);
     layoutCell.media = mediaItem;
     [layoutCell layoutSubviews];
     return CGRectGetMaxY([[layoutCell.commentLabelArray lastObject] frame]);
