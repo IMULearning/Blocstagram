@@ -45,6 +45,7 @@
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MediaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell" forIndexPath:indexPath];
     cell.media = [DataSource sharedInstance].mediaItems[indexPath.row];
+    
     return cell;
 }
 
