@@ -7,6 +7,7 @@
 //
 
 #import "MediaTableViewCell.h"
+#import "MediaCommentsView.h"
 #import "Media.h"
 #import "Comment.h"
 #import "User.h"
@@ -18,6 +19,7 @@
 @property (nonatomic, strong) UIImageView *mediaImageView;
 @property (nonatomic, strong) UILabel *usernameAndCaptionLabel;
 @property (nonatomic, strong) UILabel *commentLabel;
+@property (nonatomic, strong) MediaCommentsView *commentsView;
 
 @end
 
@@ -31,7 +33,7 @@
     layoutCell.frame = CGRectMake(0, 0, width, CGFLOAT_MAX);
     layoutCell.media = mediaItem;
     [layoutCell layoutSubviews];
-    return CGRectGetMaxY(layoutCell.commentLabel.frame);
+    return CGRectGetMaxY(layoutCell.commentsView.frame);
 }
 
 #pragma mark - Init
@@ -46,11 +48,9 @@
         self.usernameAndCaptionLabel.numberOfLines = 0;
         self.usernameAndCaptionLabel.backgroundColor = [StyleBootstrap sharedInstance].usernameLabelGray;
         
-        self.commentLabel = [[UILabel alloc] init];
-        self.commentLabel.numberOfLines = 0;
-        self.commentLabel.backgroundColor = [StyleBootstrap sharedInstance].commentLabelGray;
+        self.commentsView = [[MediaCommentsView alloc] init];
         
-        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentLabel]) {
+        for (UIView *view in @[self.mediaImageView, self.usernameAndCaptionLabel, self.commentsView]) {
             [self.contentView addSubview:view];
         }
     }
@@ -75,8 +75,8 @@
     CGSize sizeOfUsernameAndCaptionLabel = [self sizeOfString:self.usernameAndCaptionLabel.attributedText];
     self.usernameAndCaptionLabel.frame = CGRectMake(0, CGRectGetMaxY(self.mediaImageView.frame), CGRectGetWidth(self.bounds), sizeOfUsernameAndCaptionLabel.height);
     
-    CGSize sizeOfCommentLabel = [self sizeOfString:self.commentLabel.attributedText];
-    self.commentLabel.frame = CGRectMake(0, CGRectGetMaxY(self.usernameAndCaptionLabel.frame), CGRectGetWidth(self.bounds), sizeOfCommentLabel.height);
+    CGFloat commentsHeight = [MediaCommentsView heightForComments:self.media.comments width:CGRectGetWidth(self.bounds)] + 20;
+    self.commentsView.frame = CGRectMake(0, CGRectGetMaxY(self.usernameAndCaptionLabel.frame), CGRectGetWidth(self.bounds), commentsHeight);
     
     // Hide cell line
     self.separatorInset = UIEdgeInsetsMake(0, CGRectGetWidth(self.bounds)/2.0, 0, CGRectGetWidth(self.bounds)/2.0);
@@ -104,32 +104,6 @@
     return mutableUsernameAndCaptionString;
 }
 
-- (NSAttributedString *)commentString {
-    NSMutableAttributedString *commentString = [[NSMutableAttributedString alloc] init];
-    
-    for (Comment *comment in self.media.comments) {
-        NSString *baseString = [NSString stringWithFormat:@"%@ %@\n", comment.from.userName, comment.text];
-        NSDictionary *fontAttribtues = @{
-                                         NSFontAttributeName: [StyleBootstrap sharedInstance].lightFont,
-                                         NSParagraphStyleAttributeName: [StyleBootstrap sharedInstance].paragraphStyle
-                                         };
-        
-        NSMutableAttributedString *oneCommentString = [[NSMutableAttributedString alloc] initWithString:baseString
-                                                                                             attributes:fontAttribtues];
-        NSRange usernameRange = [baseString rangeOfString:comment.from.userName];
-        [oneCommentString addAttribute:NSFontAttributeName
-                                                value:[StyleBootstrap sharedInstance].boldFont
-                                                range:usernameRange];
-        [oneCommentString addAttribute:NSForegroundColorAttributeName
-                                                value:[StyleBootstrap sharedInstance].linkColor
-                                                range:usernameRange];
-        
-        [commentString appendAttributedString:oneCommentString];
-    }
-    
-    return commentString;
-}
-
 - (CGSize)sizeOfString: (NSAttributedString *)string {
     return [LayoutUtility sizeOfString:string
                            forMaxWidth:CGRectGetWidth(self.contentView.bounds) - 40.0
@@ -142,7 +116,7 @@
     _media = media;
     self.mediaImageView.image = _media.image;
     self.usernameAndCaptionLabel.attributedText = [self usernameAndCaptionString];
-    self.commentLabel.attributedText = [self commentString];
+    self.commentsView.comments = _media.comments;
 }
 
 @end

@@ -14,4 +14,6 @@
 
 @property (nonatomic, strong) NSArray *comments;
 
++ (CGFloat) heightForComments:(NSArray *)comments width:(CGFloat)width;
+
 @end

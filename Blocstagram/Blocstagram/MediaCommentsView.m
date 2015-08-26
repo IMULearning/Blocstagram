@@ -20,8 +20,18 @@
 
 @implementation MediaCommentsView
 
++ (CGFloat) heightForComments:(NSArray *)comments width:(CGFloat)width {
+    MediaCommentsView *view = [[MediaCommentsView alloc] init];
+    view.frame = CGRectMake(0, 0, width, CGFLOAT_MAX);
+    view.comments = comments;
+    [view layoutSubviews];
+    return CGRectGetMaxY([[view.commentLabels lastObject] frame]);
+}
+
 - (void)layoutSubviews {
     [super layoutSubviews];
+    
+    NSLog(@"Called!");
     
     CGFloat y = 0;
     for (UILabel *label in self.commentLabels) {

@@ -50,7 +50,8 @@
             media.user = [self randomUser];
             media.caption = [self randomSentence];
             
-            NSUInteger commentCount = arc4random_uniform(10) + 2;
+//            NSUInteger commentCount = arc4random_uniform(10) + 2;
+            NSUInteger commentCount = 3;
             NSMutableArray *randomComments = [NSMutableArray array];
             for (int j = 0; j < commentCount; j++) {
                 [randomComments addObject:[self randomComment]];
