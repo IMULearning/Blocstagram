@@ -33,6 +33,9 @@
     
     [[DataSource sharedInstance] addObserver:self forKeyPath:@"mediaItems" options:0 context:nil];
     
+    self.refreshControl = [[UIRefreshControl alloc] init];
+    [self.refreshControl addTarget:self action:@selector(refreshControlDidFire:) forControlEvents:UIControlEventValueChanged];
+    
     // register class for cell reuse
     [self.tableView registerClass:[MediaTableViewCell class] forCellReuseIdentifier:@"imageCell"];
 }
@@ -133,5 +136,26 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Refresh Control
+
+- (void) refreshControlDidFire:(UIRefreshControl *) sender{
+    [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:^(NSError *error) {
+        [sender endRefreshing];
+    }];
+}
+
+#pragma mark - UIScrollViewDelegate
+
+- (void) infiniteScrollIfNecessary {
+    NSIndexPath *bottomIndexPath = [[self.tableView indexPathsForVisibleRows] lastObject];
+    if (bottomIndexPath && bottomIndexPath.row == [DataSource sharedInstance].mediaItems.count - 1) {
+        [[DataSource sharedInstance] requestOldItemsWithCompletionHandler:nil];
+    }
+}
+
+- (void)scrollViewDidScroll:(UIScrollView *)scrollView {
+    [self infiniteScrollIfNecessary];
+}
 
 @end

@@ -15,6 +15,9 @@
     NSMutableArray *_mediaItems;
 }
 
+@property (nonatomic, strong) NSArray *mediaItems;
+@property (nonatomic, assign) BOOL isRefreshing;
+
 @end
 
 @implementation DataSource
@@ -112,6 +115,46 @@
 - (void) deleteMediaItem:(Media *)item {
     NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
     [mutableArrayWithKVO removeObject:item];
+}
+
+- (void) requestNewItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
+    if (self.isRefreshing == NO) {
+        self.isRefreshing = YES;
+        
+        int imageName = arc4random_uniform(10) + 1;
+        Media *media = [[Media alloc] init];
+        media.user = [self randomUser];
+        media.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", imageName]];
+        media.caption = [self randomSentence];
+    
+        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+        [mutableArrayWithKVO insertObject:media atIndex:0];
+        
+        self.isRefreshing = NO;
+        if (completionHandler) {
+            completionHandler(nil);
+        }
+    }
+}
+
+- (void) requestOldItemsWithCompletionHandler:(NewItemCompletionBlock)completionHandler {
+    if (self.isRefreshing == NO) {
+        self.isRefreshing = YES;
+        
+        int imageName = arc4random_uniform(10) + 1;
+        Media *media = [[Media alloc] init];
+        media.user = [self randomUser];
+        media.image = [UIImage imageNamed:[NSString stringWithFormat:@"%d.jpg", imageName]];
+        media.caption = [self randomSentence];
+        
+        NSMutableArray *mutableArrayWithKVO = [self mutableArrayValueForKey:@"mediaItems"];
+        [mutableArrayWithKVO addObject:media];
+        
+        self.isRefreshing = NO;
+        if (completionHandler) {
+            completionHandler(nil);
+        }
+    }
 }
 
 #pragma mark - Key/Value Observing
