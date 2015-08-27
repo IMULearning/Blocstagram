@@ -104,7 +104,8 @@
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Media *item = [DataSource sharedInstance].mediaItems[indexPath.row];
-        [[DataSource sharedInstance] deleteMediaItem:item];
+//        [[DataSource sharedInstance] deleteMediaItem:item];
+        [[DataSource sharedInstance] moveToTop:item];
     } else if (editingStyle == UITableViewCellEditingStyleInsert) {
         // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
     }   
