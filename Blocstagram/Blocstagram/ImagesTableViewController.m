@@ -7,6 +7,10 @@
 //
 
 #import "ImagesTableViewController.h"
+#import "DataSource.h"
+#import "Media.h"
+#import "User.h"
+#import "Comment.h"
 
 @interface ImagesTableViewController ()
 
@@ -16,22 +20,11 @@
 
 - (id) initWithStyle:(UITableViewStyle)style {
     self = [super initWithStyle:style];
-    if (self) {
-        self.images = [NSMutableArray array];
-    }
     return self;
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    for (int i = 0; i < 10; i++) {
-        NSString *imageName = [NSString stringWithFormat:@"%d.jpg", i];
-        UIImage *image = [UIImage imageNamed:imageName];
-        if (image) {
-            [self.images addObject:image];
-        }
-    }
     
     // register class for cell reuse
     [self.tableView registerClass:[UITableViewCell class] forCellReuseIdentifier:@"imageCell"];
@@ -45,7 +38,7 @@
 #pragma mark - Table view data source
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-    return self.images.count;
+    return [self items].count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -63,15 +56,15 @@
         [cell.contentView addSubview:imageView];
     }
     
-    UIImage *image = self.images[indexPath.row];
-    imageView.image = image;
+    Media *media = [self items][indexPath.row];
+    imageView.image = media.image;
     
     return cell;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UIImage *image = self.images[indexPath.row];
-    return (CGRectGetWidth(self.view.frame) / image.size.width) * image.size.height;
+    Media *media = [self items][indexPath.row];
+    return (CGRectGetWidth(self.view.frame) / media.image.size.width) * media.image.size.height;
 }
 
 
@@ -118,5 +111,11 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+#pragma mark - Misc
+
+- (NSArray *)items {
+    return [DataSource sharedInstance].mediaItems;
+}
 
 @end
