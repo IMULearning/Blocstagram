@@ -28,12 +28,10 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
     self.webView = webView;
     self.title = NSLocalizedString(@"Login", @"Login");
     
-    NSString *urlString = [NSString stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token", [DataSource instagramClientID], [self redirectURI]];
-    NSURL *url = [NSURL URLWithString:urlString];
-    if (url) {
-        NSURLRequest *request = [NSURLRequest requestWithURL:url];
-        [self.webView loadRequest:request];
-    }
+    [self gotoHome];
+    
+    // Add back button
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Home" style:UIBarButtonItemStylePlain target:self action:@selector(gotoHome)];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -42,6 +40,15 @@ NSString *const LoginViewControllerDidGetAccessTokenNotification = @"LoginViewCo
 
 - (NSString *)redirectURI {
     return @"http://blocstagram.io";
+}
+
+- (void)gotoHome {
+    NSString *urlString = [NSString stringWithFormat:@"https://instagram.com/oauth/authorize/?client_id=%@&redirect_uri=%@&response_type=token", [DataSource instagramClientID], [self redirectURI]];
+    NSURL *url = [NSURL URLWithString:urlString];
+    if (url) {
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        [self.webView loadRequest:request];
+    }
 }
 
 - (void)dealloc {
