@@ -142,7 +142,11 @@ static NSParagraphStyle *paragraphStyle;
 #pragma mark - UITableCell specific
 
 - (void)setSelected:(BOOL)selected animated:(BOOL)animated {
-    [super setSelected:selected animated:animated];
+    [super setSelected:NO animated:animated];
+}
+
+- (void)setHighlighted:(BOOL)highlighted animated:(BOOL)animated {
+    [super setHighlighted:NO animated:animated];
 }
 
 #pragma mark - Style

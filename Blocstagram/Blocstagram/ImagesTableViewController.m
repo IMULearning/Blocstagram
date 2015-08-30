@@ -113,6 +113,16 @@
     }   
 }
 
+// Height estimation avoid batch height calculation
+- (CGFloat)tableView:(UITableView *)tableView estimatedHeightForRowAtIndexPath:(NSIndexPath *)indexPath {
+    Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
+    if (mediaItem.image) {
+        return 350;
+    } else {
+        return 150;
+    }
+}
+
 /*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
@@ -148,6 +158,7 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void) infiniteScrollIfNecessary {
+    NSLog(@"entered");
     NSIndexPath *bottomIndexPath = [[self.tableView indexPathsForVisibleRows] lastObject];
     if (bottomIndexPath && bottomIndexPath.row == [DataSource sharedInstance].mediaItems.count - 1) {
         [[DataSource sharedInstance] requestOldItemsWithCompletionHandler:nil];
