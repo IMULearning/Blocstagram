@@ -28,6 +28,7 @@
 		9A17536D1B8D224C00A5A172 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17536C1B8D224C00A5A172 /* Comment.m */; };
 		9A1753701B8D228B00A5A172 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17536F1B8D228B00A5A172 /* DataSource.m */; };
 		9A1753731B8D2A2200A5A172 /* MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1753721B8D2A2200A5A172 /* MediaTableViewCell.m */; };
+		9A325C2D1B926C8400E39031 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A325C2C1B926C8400E39031 /* LoginViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,8 @@
 		9A17536F1B8D228B00A5A172 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
 		9A1753711B8D2A2200A5A172 /* MediaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaTableViewCell.h; sourceTree = "<group>"; };
 		9A1753721B8D2A2200A5A172 /* MediaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCell.m; sourceTree = "<group>"; };
+		9A325C2B1B926C8400E39031 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		9A325C2C1B926C8400E39031 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -121,6 +124,8 @@
 				9A1753721B8D2A2200A5A172 /* MediaTableViewCell.m */,
 				9A1753621B8D178200A5A172 /* ImagesTableViewController.h */,
 				9A1753631B8D178200A5A172 /* ImagesTableViewController.m */,
+				9A325C2B1B926C8400E39031 /* LoginViewController.h */,
+				9A325C2C1B926C8400E39031 /* LoginViewController.m */,
 				9A1753651B8D217300A5A172 /* User.h */,
 				9A1753661B8D217300A5A172 /* User.m */,
 				9A1753681B8D21ED00A5A172 /* Media.h */,
@@ -293,6 +298,7 @@
 				9A1753731B8D2A2200A5A172 /* MediaTableViewCell.m in Sources */,
 				9A17536A1B8D21ED00A5A172 /* Media.m in Sources */,
 				9A1753171B8D145900A5A172 /* AppDelegate.m in Sources */,
+				9A325C2D1B926C8400E39031 /* LoginViewController.m in Sources */,
 				9A1753701B8D228B00A5A172 /* DataSource.m in Sources */,
 				9A1753141B8D145900A5A172 /* main.m in Sources */,
 				9A1753641B8D178200A5A172 /* ImagesTableViewController.m in Sources */,
