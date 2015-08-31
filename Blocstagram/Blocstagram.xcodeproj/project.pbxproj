@@ -23,6 +23,11 @@
 		9A17535F1B8D173B00A5A172 /* 9.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9A1753551B8D173B00A5A172 /* 9.jpg */; };
 		9A1753601B8D173B00A5A172 /* 10.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9A1753561B8D173B00A5A172 /* 10.jpg */; };
 		9A1753641B8D178200A5A172 /* ImagesTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1753631B8D178200A5A172 /* ImagesTableViewController.m */; };
+		9A1753671B8D217300A5A172 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1753661B8D217300A5A172 /* User.m */; };
+		9A17536A1B8D21ED00A5A172 /* Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1753691B8D21ED00A5A172 /* Media.m */; };
+		9A17536D1B8D224C00A5A172 /* Comment.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17536C1B8D224C00A5A172 /* Comment.m */; };
+		9A1753701B8D228B00A5A172 /* DataSource.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A17536F1B8D228B00A5A172 /* DataSource.m */; };
+		9A1753731B8D2A2200A5A172 /* MediaTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A1753721B8D2A2200A5A172 /* MediaTableViewCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -58,6 +63,16 @@
 		9A1753561B8D173B00A5A172 /* 10.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 10.jpg; sourceTree = "<group>"; };
 		9A1753621B8D178200A5A172 /* ImagesTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImagesTableViewController.h; sourceTree = "<group>"; };
 		9A1753631B8D178200A5A172 /* ImagesTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImagesTableViewController.m; sourceTree = "<group>"; };
+		9A1753651B8D217300A5A172 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
+		9A1753661B8D217300A5A172 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		9A1753681B8D21ED00A5A172 /* Media.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Media.h; sourceTree = "<group>"; };
+		9A1753691B8D21ED00A5A172 /* Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Media.m; sourceTree = "<group>"; };
+		9A17536B1B8D224C00A5A172 /* Comment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Comment.h; sourceTree = "<group>"; };
+		9A17536C1B8D224C00A5A172 /* Comment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Comment.m; sourceTree = "<group>"; };
+		9A17536E1B8D228B00A5A172 /* DataSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataSource.h; sourceTree = "<group>"; };
+		9A17536F1B8D228B00A5A172 /* DataSource.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataSource.m; sourceTree = "<group>"; };
+		9A1753711B8D2A2200A5A172 /* MediaTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaTableViewCell.h; sourceTree = "<group>"; };
+		9A1753721B8D2A2200A5A172 /* MediaTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaTableViewCell.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -102,8 +117,18 @@
 				9A1753611B8D174500A5A172 /* Images */,
 				9A1753151B8D145900A5A172 /* AppDelegate.h */,
 				9A1753161B8D145900A5A172 /* AppDelegate.m */,
+				9A1753711B8D2A2200A5A172 /* MediaTableViewCell.h */,
+				9A1753721B8D2A2200A5A172 /* MediaTableViewCell.m */,
 				9A1753621B8D178200A5A172 /* ImagesTableViewController.h */,
 				9A1753631B8D178200A5A172 /* ImagesTableViewController.m */,
+				9A1753651B8D217300A5A172 /* User.h */,
+				9A1753661B8D217300A5A172 /* User.m */,
+				9A1753681B8D21ED00A5A172 /* Media.h */,
+				9A1753691B8D21ED00A5A172 /* Media.m */,
+				9A17536B1B8D224C00A5A172 /* Comment.h */,
+				9A17536C1B8D224C00A5A172 /* Comment.m */,
+				9A17536E1B8D228B00A5A172 /* DataSource.h */,
+				9A17536F1B8D228B00A5A172 /* DataSource.m */,
 				9A17531E1B8D145900A5A172 /* Images.xcassets */,
 				9A1753201B8D145900A5A172 /* LaunchScreen.xib */,
 				9A1753111B8D145900A5A172 /* Supporting Files */,
@@ -263,7 +288,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A1753671B8D217300A5A172 /* User.m in Sources */,
+				9A17536D1B8D224C00A5A172 /* Comment.m in Sources */,
+				9A1753731B8D2A2200A5A172 /* MediaTableViewCell.m in Sources */,
+				9A17536A1B8D21ED00A5A172 /* Media.m in Sources */,
 				9A1753171B8D145900A5A172 /* AppDelegate.m in Sources */,
+				9A1753701B8D228B00A5A172 /* DataSource.m in Sources */,
 				9A1753141B8D145900A5A172 /* main.m in Sources */,
 				9A1753641B8D178200A5A172 /* ImagesTableViewController.m in Sources */,
 			);
