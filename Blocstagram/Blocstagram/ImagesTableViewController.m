@@ -12,8 +12,9 @@
 #import "User.h"
 #import "Comment.h"
 #import "MediaTableViewCell.h"
+#import "MediaFullScreenViewController.h"
 
-@interface ImagesTableViewController ()
+@interface ImagesTableViewController () <MediaTableViewCellDelegate>
 
 @end
 
@@ -90,6 +91,7 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     MediaTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"imageCell" forIndexPath:indexPath];
+    cell.delegate = self;
     cell.media = [DataSource sharedInstance].mediaItems[indexPath.row];
     return cell;
 }
@@ -166,6 +168,30 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self infiniteScrollIfNecessary];
+}
+
+#pragma mark - MediaTableViewCellDelegate
+
+- (void)cell:(MediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView {
+    MediaFullScreenViewController *fullScreenVC = [[MediaFullScreenViewController alloc] initWithMedia:cell.media];
+    [self presentViewController:fullScreenVC animated:YES completion:nil];
+}
+
+- (void)cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView {
+    NSMutableArray *itemsToShare = [NSMutableArray array];
+    
+    if (cell.media.caption.length > 0) {
+        [itemsToShare addObject:cell.media.caption];
+    }
+    
+    if (cell.media.image) {
+        [itemsToShare addObject:cell.media.image];
+    }
+    
+    if (itemsToShare.count > 0) {
+        UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
+        [self presentViewController:activityVC animated:YES completion:nil];
+    }
 }
 
 @end
