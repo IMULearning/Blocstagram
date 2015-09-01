@@ -17,6 +17,15 @@
 
 @implementation AppDelegate
 
+- (instancetype)init {
+    self = [super init];
+    
+    [[NSNotificationCenter defaultCenter] addObserverForName:DataSourceDidStoreDataFromDisk object:nil queue:nil usingBlock:^(NSNotification *note) {
+        [[DataSource sharedInstance] requestNewItemsWithCompletionHandler:nil];
+    }];
+    
+    return self;
+}
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
  

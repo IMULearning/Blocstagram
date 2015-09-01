@@ -27,6 +27,8 @@
 
 @implementation DataSource
 
+NSString *const DataSourceDidStoreDataFromDisk = @"DataSourceDidStoreDataFromDisk";
+
 + (instancetype)sharedInstance {
     static dispatch_once_t once;
     static id sharedInstance;
@@ -56,6 +58,8 @@
                 
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (storedMediaItems.count > 0) {
+                        [[NSNotificationCenter defaultCenter] postNotificationName:DataSourceDidStoreDataFromDisk object:nil];
+                        
                         NSMutableArray *mutableMediaItems = [storedMediaItems mutableCopy];
                         [self willChangeValueForKey:@"mediaItems"];
                         self.mediaItems = mutableMediaItems;
