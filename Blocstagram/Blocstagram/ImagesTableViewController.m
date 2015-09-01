@@ -158,7 +158,6 @@
 #pragma mark - UIScrollViewDelegate
 
 - (void) infiniteScrollIfNecessary {
-    NSLog(@"entered");
     NSIndexPath *bottomIndexPath = [[self.tableView indexPathsForVisibleRows] lastObject];
     if (bottomIndexPath && bottomIndexPath.row == [DataSource sharedInstance].mediaItems.count - 1) {
         [[DataSource sharedInstance] requestOldItemsWithCompletionHandler:nil];
