@@ -14,7 +14,7 @@
 #import "MediaTableViewCell.h"
 #import "MediaFullScreenViewController.h"
 
-@interface ImagesTableViewController () <MediaTableViewCellDelegate>
+@interface ImagesTableViewController () <MediaTableViewCellDelegate, MediaFullScreenViewControllerDelegate>
 
 @end
 
@@ -174,23 +174,34 @@
 
 - (void)cell:(MediaTableViewCell *)cell didTapImageView:(UIImageView *)imageView {
     MediaFullScreenViewController *fullScreenVC = [[MediaFullScreenViewController alloc] initWithMedia:cell.media];
+    fullScreenVC.delegate = self;
     [self presentViewController:fullScreenVC animated:YES completion:nil];
 }
 
 - (void)cell:(MediaTableViewCell *)cell didLongPressImageView:(UIImageView *)imageView {
+    [self presentShareControllerIfNecessaryWithMedia:cell.media forViewController:self];
+}
+
+#pragma mark - MediaFullScreenViewControllerDelegate
+
+- (void)shareButtonTappedWithMedia:(Media *)media inFullScreenViewController:(MediaFullScreenViewController *)vc {
+    [self presentShareControllerIfNecessaryWithMedia:media forViewController:vc];
+}
+
+- (void)presentShareControllerIfNecessaryWithMedia:(Media *) media forViewController:(UIViewController *)vc {
     NSMutableArray *itemsToShare = [NSMutableArray array];
     
-    if (cell.media.caption.length > 0) {
-        [itemsToShare addObject:cell.media.caption];
+    if (media.caption.length > 0) {
+        [itemsToShare addObject:media.caption];
     }
     
-    if (cell.media.image) {
-        [itemsToShare addObject:cell.media.image];
+    if (media.image) {
+        [itemsToShare addObject:media.image];
     }
     
     if (itemsToShare.count > 0) {
         UIActivityViewController *activityVC = [[UIActivityViewController alloc] initWithActivityItems:itemsToShare applicationActivities:nil];
-        [self presentViewController:activityVC animated:YES completion:nil];
+        [vc presentViewController:activityVC animated:YES completion:nil];
     }
 }
 

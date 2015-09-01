@@ -16,6 +16,8 @@
 @property (nonatomic, strong) UITapGestureRecognizer *tap;
 @property (nonatomic, strong) UITapGestureRecognizer *doubleTap;
 
+@property (nonatomic, strong) UIButton *shareButton;
+
 @end
 
 @implementation MediaFullScreenViewController
@@ -40,6 +42,11 @@
     [self.tap requireGestureRecognizerToFail:self.doubleTap];
     [self.scrollView addGestureRecognizer:self.tap];
     [self.scrollView addGestureRecognizer:self.doubleTap];
+    
+    self.shareButton = [UIButton buttonWithType:UIButtonTypeCustom];
+    [self.shareButton setTitle:NSLocalizedString(@"Share", @"Share") forState:UIControlStateNormal];
+    [self.shareButton addTarget:self action:@selector(shareButtonFired:) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:self.shareButton];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -55,6 +62,12 @@
     CGFloat minScale = MIN(scaleWidth, scaleHeight);
     self.scrollView.minimumZoomScale = minScale;
     self.scrollView.maximumZoomScale = 1;
+    
+    [self.shareButton sizeToFit];
+    CGSize buttonSize = self.shareButton.frame.size;
+    CGFloat buttonX = self.view.bounds.size.width - 20 - buttonSize.width;
+    CGFloat buttonY = 20;
+    self.shareButton.frame = CGRectMake(buttonX, buttonY, buttonSize.width, buttonSize.height);
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -122,6 +135,12 @@
         [self.scrollView zoomToRect:CGRectMake(x, y, width, height) animated:YES];
     } else {
         [self.scrollView setZoomScale:self.scrollView.minimumZoomScale animated:YES];
+    }
+}
+
+- (void)shareButtonFired:(UIButton *)button {
+    if (self.delegate) {
+        [self.delegate shareButtonTappedWithMedia:self.media inFullScreenViewController:self];
     }
 }
 
