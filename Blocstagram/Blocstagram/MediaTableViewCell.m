@@ -10,6 +10,7 @@
 #import "Media.h"
 #import "Comment.h"
 #import "User.h"
+#import "DataSource.h"
 
 @interface MediaTableViewCell ()  <UIGestureRecognizerDelegate>
 
@@ -23,6 +24,8 @@
 
 @property (nonatomic, strong) UITapGestureRecognizer *tapGestureRecognizer;
 @property (nonatomic, strong) UILongPressGestureRecognizer *longPressGestureRecognizer;
+
+@property (nonatomic, strong) UITapGestureRecognizer *doubleTapGestureRecognizer;
 
 @end
 
@@ -75,9 +78,18 @@ static NSParagraphStyle *paragraphStyle;
         self.mediaImageView = [[UIImageView alloc] init];
         self.mediaImageView.userInteractionEnabled = YES;
         
+        self.doubleTapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self
+                                                                                  action:@selector(doubleTapFired:)];
+        self.doubleTapGestureRecognizer.delegate = self;
+        self.doubleTapGestureRecognizer.numberOfTapsRequired = 2;
+        [self.mediaImageView addGestureRecognizer:self.doubleTapGestureRecognizer];
+        
         self.tapGestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapFired:)];
         self.tapGestureRecognizer.delegate = self;
+        [self.tapGestureRecognizer requireGestureRecognizerToFail:self.doubleTapGestureRecognizer];
         [self.mediaImageView addGestureRecognizer:self.tapGestureRecognizer];
+        
+        
         
         self.longPressGestureRecognizer = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(longPressFired:)];
         self.longPressGestureRecognizer.delegate = self;
@@ -249,6 +261,13 @@ static NSParagraphStyle *paragraphStyle;
 - (void)longPressFired:(UILongPressGestureRecognizer *)sender {
     if (sender.state == UIGestureRecognizerStateBegan) {
         [self.delegate cell:self didLongPressImageView:self.mediaImageView];
+    }
+}
+
+- (void)doubleTapFired:(UITapGestureRecognizer *)sender {
+    if (sender.state == UIGestureRecognizerStateRecognized) {
+        NSLog(@"Redownloading image for %p", self.media);
+        [[DataSource sharedInstance] downloadImageForMediaItem:self.media];
     }
 }
 
