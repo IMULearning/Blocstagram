@@ -125,13 +125,6 @@
     }
 }
 
-- (void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath {
-    Media *mediaItem = [DataSource sharedInstance].mediaItems[indexPath.row];
-    if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
-        [[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
-    }
-}
-
 /*
 // Override to support rearranging the table view.
 - (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
@@ -175,6 +168,20 @@
 
 - (void)scrollViewDidScroll:(UIScrollView *)scrollView {
     [self infiniteScrollIfNecessary];
+}
+
+- (void)scrollViewWillBeginDecelerating:(UIScrollView *)scrollView {
+    if ([scrollView isKindOfClass:[UITableView class]]) {
+        UITableView *tableView = (UITableView *)scrollView;
+        NSArray *visibleCells = tableView.visibleCells;
+        for (int i = 0; i < visibleCells.count; i++) {
+            MediaTableViewCell *cell = [visibleCells objectAtIndex:i];
+            Media *mediaItem = cell.media;
+            if (mediaItem.downloadState == MediaDownloadStateNeedsImage) {
+                [[DataSource sharedInstance] downloadImageForMediaItem:mediaItem];
+            }
+        }
+    }
 }
 
 #pragma mark - MediaTableViewCellDelegate
