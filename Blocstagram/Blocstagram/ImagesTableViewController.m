@@ -201,4 +201,16 @@
     }
 }
 
+- (void)cellDidPressLikeButton:(MediaTableViewCell *)cell {
+    Media *mediaItem = cell.media;
+    
+    [[DataSource sharedInstance] toggleLikeOnMediaItem:mediaItem withCompletionHandler:^{
+        if (cell.media == mediaItem) {
+            cell.media = mediaItem;
+        }
+    }];
+    
+    cell.media = mediaItem;
+}
+
 @end
