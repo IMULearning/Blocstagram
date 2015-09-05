@@ -291,45 +291,102 @@
     return datePath;
 }
 
+//- (void) toggleLikeOnMediaItem:(Media *)mediaItem withCompletionHandler:(void (^)(void))completionHandler {
+//    NSString *urlString = [NSString stringWithFormat:@"media/%@/likes", mediaItem.idNumber];
+//    NSDictionary *parameters = @{@"access_token": self.accessToken};
+//    
+//    if (mediaItem.likeState == LikeStateNotLiked) {
+//        
+//        mediaItem.likeState = LikeStateLiking;
+//        mediaItem.likeCount++;
+//        
+//        [self.instagramOperationManager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            mediaItem.likeState = LikeStateLiked;
+//            
+//            if (completionHandler) {
+//                completionHandler();
+//            }
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            mediaItem.likeState = LikeStateNotLiked;
+//            if (completionHandler) {
+//                completionHandler();
+//            }
+//        }];
+//        
+//    } else if (mediaItem.likeState == LikeStateLiked) {
+//        
+//        mediaItem.likeState = LikeStateUnliking;
+//        mediaItem.likeCount--;
+//        if (mediaItem.likeCount < 0) {
+//            mediaItem.likeCount = 0;
+//        }
+//        
+//        [self.instagramOperationManager DELETE:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
+//            mediaItem.likeState = LikeStateNotLiked;
+//            
+//            if (completionHandler) {
+//                completionHandler();
+//            }
+//        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
+//            mediaItem.likeState = LikeStateLiked;
+//            
+//            if (completionHandler) {
+//                completionHandler();
+//            }
+//        }];
+//    }
+//    
+//    [self saveImages];
+//}
+
 - (void) toggleLikeOnMediaItem:(Media *)mediaItem withCompletionHandler:(void (^)(void))completionHandler {
-    NSString *urlString = [NSString stringWithFormat:@"media/%@/likes", mediaItem.idNumber];
-    NSDictionary *parameters = @{@"access_token": self.accessToken};
+    int chance = arc4random_uniform(10);
     
     if (mediaItem.likeState == LikeStateNotLiked) {
         
         mediaItem.likeState = LikeStateLiking;
-        
-        [self.instagramOperationManager POST:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            mediaItem.likeState = LikeStateLiked;
-            
-            if (completionHandler) {
-                completionHandler();
-            }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            mediaItem.likeState = LikeStateNotLiked;
-            NSLog(error.description);
-            if (completionHandler) {
-                completionHandler();
-            }
-        }];
-        
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [NSThread sleepForTimeInterval:2];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (chance < 6) {
+                    mediaItem.likeState = LikeStateLiked;
+                    mediaItem.likeCount++;
+                    [self saveImages];
+                    if (completionHandler) {
+                        completionHandler();
+                    }
+                } else {
+                    mediaItem.likeState = LikeStateNotLiked;
+                    if (completionHandler) {
+                        completionHandler();
+                    }
+                }
+            });
+        });
     } else if (mediaItem.likeState == LikeStateLiked) {
         
         mediaItem.likeState = LikeStateUnliking;
-        
-        [self.instagramOperationManager DELETE:urlString parameters:parameters success:^(AFHTTPRequestOperation *operation, id responseObject) {
-            mediaItem.likeState = LikeStateNotLiked;
-            
-            if (completionHandler) {
-                completionHandler();
-            }
-        } failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-            mediaItem.likeState = LikeStateLiked;
-            
-            if (completionHandler) {
-                completionHandler();
-            }
-        }];
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+            [NSThread sleepForTimeInterval:2];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                if (chance < 6) {
+                    mediaItem.likeState = LikeStateNotLiked;
+                    mediaItem.likeCount--;
+                    if (mediaItem.likeCount < 0) {
+                        mediaItem.likeCount = 0;
+                    }
+                    [self saveImages];
+                    if (completionHandler) {
+                        completionHandler();
+                    }
+                } else {
+                    mediaItem.likeState = LikeStateLiked;
+                    if (completionHandler) {
+                        completionHandler();
+                    }
+                }
+            });
+        });
     }
 }
 

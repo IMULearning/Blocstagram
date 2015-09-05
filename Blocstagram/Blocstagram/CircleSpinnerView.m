@@ -29,7 +29,7 @@
 }
 
 - (CGSize)sizeThatFits:(CGSize)size {
-    CGFloat sideLength = (self.radius + self.strokeThickness / 2 + 5) * 2;
+    CGFloat sideLength = (self.radius + self.strokeThickness / 2 + 7) * 2;
     return CGSizeMake(sideLength, sideLength);
 }
 
@@ -76,7 +76,7 @@
 
 - (CAShapeLayer *)circleLayer {
     if (!_circleLayer) {
-        CGPoint arcCenter = CGPointMake(self.radius + self.strokeThickness / 2 + 5, self.radius + self.strokeThickness / 2 + 5);
+        CGPoint arcCenter = CGPointMake(self.radius + self.strokeThickness / 2 + 7, self.radius + self.strokeThickness / 2 + 7);
         CGRect rect = CGRectMake(0, 0, arcCenter.x * 2, arcCenter.y * 2);
         
         UIBezierPath *smoothPath = [UIBezierPath bezierPathWithArcCenter:arcCenter
@@ -91,8 +91,8 @@
         _circleLayer.fillColor = [UIColor clearColor].CGColor;
         _circleLayer.strokeColor = self.strokeColor.CGColor;
         _circleLayer.lineWidth = self.strokeThickness;
-        _circleLayer.lineCap = kCALineCapRound;
-        _circleLayer.lineJoin = kCALineJoinBevel;
+        _circleLayer.lineCap = kCALineCapSquare;
+        _circleLayer.lineJoin = kCALineJoinRound;
         _circleLayer.path = [smoothPath CGPath];
         
         CALayer *maskLayer = [CALayer layer];
@@ -105,12 +105,12 @@
         
         CABasicAnimation *animation = [CABasicAnimation animationWithKeyPath:@"transform.rotation"];
         animation.fromValue = @0;
-        animation.toValue = @(M_PI * 2);
+        animation.toValue = @(M_PI * 4);
         animation.duration = animationDuration;
         animation.timingFunction = linearCurve;
         animation.removedOnCompletion = NO;
         animation.repeatCount = INFINITY;
-        animation.fillMode = kCAFillModeForwards;
+        animation.fillMode = kCAFillModeBackwards;
         animation.autoreverses = NO;
         [_circleLayer.mask addAnimation:animation forKey:@"rotate"];
         
