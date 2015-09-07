@@ -109,12 +109,12 @@
                 NSError *error = nil;
                 AVCaptureDeviceInput *input = [AVCaptureDeviceInput deviceInputWithDevice:device error:&error];
                 if (!input) {
-                    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion preferredStyle:UIAlertControllerStyleAlert];
-                    [alertVC addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK button") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
-                        [self.delegate cameraViewController:self didCompleteWithImage:nil];
-                    }]];
+                    [self presentAlertWithTitle:error.localizedDescription
+                                        message:error.localizedRecoverySuggestion
+                                 dismissHandler:^(UIAlertAction *action) {
+                                     [self.delegate cameraViewController:self didCompleteWithImage:nil];
+                                 }];
                     
-                    [self presentViewController:alertVC animated:YES completion:nil];
                 } else {
                     [self.session addInput:input];
                     
@@ -124,14 +124,11 @@
                     [self.session startRunning];
                 }
             } else {
-                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:NSLocalizedString(@"Camera Permission Denied", @"camera permission denied title")
-                                                                                 message:NSLocalizedString(@"This app doesn't have permission to use the camera; please update your privacy settings.", @"camera permission denied recovery suggestion")
-                                                                          preferredStyle:UIAlertControllerStyleAlert];
-                [alertVC addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK Button") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [self presentAlertWithTitle:NSLocalizedString(@"Camera Permission Denied", @"camera permission denied title")
+                                    message:NSLocalizedString(@"This app doesn't have permission to use the camera; please update your privacy settings.", @"camera permission denied recovery suggestion")
+                             dismissHandler:^(UIAlertAction *action) {
                     [self.delegate cameraViewController:self didCompleteWithImage:nil];
-                }]];
-                
-                [self presentViewController:alertVC animated:YES completion:nil];
+                }];
             }
         });
     }];
@@ -245,8 +242,7 @@
             NSData *imageData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
             UIImage *image = [UIImage imageWithData:imageData scale:[UIScreen mainScreen].scale];
             
-            image = [image imageWithFixOrientation];
-            image = [image imageResizedToMatchAspectRatioOfSize:self.captureVideoPreviewLayer.bounds.size];
+            CGSize aspectRatioExample = self.captureVideoPreviewLayer.bounds.size;
             
             UIView *leftLine = self.verticalLines.firstObject;
             UIView *rightLine = self.verticalLines.lastObject;
@@ -259,22 +255,26 @@
                                          CGRectGetMinY(bottomLine.frame) - CGRectGetMinY(topLine.frame));
             CGRect cropRect = gridRect;
             cropRect.origin.x = (CGRectGetMinX(gridRect) + (image.size.width - CGRectGetWidth(gridRect)) / 2);
-            image = [image imageCroppedToRect:cropRect];
+            
+            image = [image imageByScalingToSize:aspectRatioExample andCroppingWithRect:cropRect];
             
             dispatch_async(dispatch_get_main_queue(), ^{
                 [self.delegate cameraViewController:self didCompleteWithImage:image];
             });
         } else {
             dispatch_async(dispatch_get_main_queue(), ^{
-                UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion preferredStyle:UIAlertControllerStyleAlert];
-                [alertVC addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK button") style:UIAlertActionStyleCancel handler:^(UIAlertAction *action) {
+                [self presentAlertWithTitle:error.localizedDescription message:error.localizedRecoverySuggestion dismissHandler:^(UIAlertAction *action) {
                     [self.delegate cameraViewController:self didCompleteWithImage:nil];
-                }]];
-                
-                [self presentViewController:alertVC animated:YES completion:nil];
+                }];
             });
         }
     }];
+}
+
+- (void) presentAlertWithTitle:(NSString *)title message:(NSString *)message dismissHandler:(void (^)(UIAlertAction *action))handler {
+    UIAlertController *alertVC = [UIAlertController alertControllerWithTitle:title message:message preferredStyle:UIAlertControllerStyleAlert];
+    [alertVC addAction:[UIAlertAction actionWithTitle:NSLocalizedString(@"OK", @"OK button") style:UIAlertActionStyleCancel handler:handler]];
+    [self presentViewController:alertVC animated:YES completion:nil];
 }
 
 @end
