@@ -14,8 +14,9 @@
 #import "MediaTableViewCell.h"
 #import "MediaFullScreenViewController.h"
 #import "CameraViewController.h"
+#import "ImageLibraryViewController.h"
 
-@interface ImagesTableViewController () <MediaTableViewCellDelegate, CameraViewControllerDelegate>
+@interface ImagesTableViewController () <MediaTableViewCellDelegate, CameraViewControllerDelegate, ImageLibraryViewControllerDelegate>
 
 @property (nonatomic, weak) UIView *lastSelectedCommentView;
 @property (nonatomic, assign) CGFloat lastKeyboardAdjustment;
@@ -325,18 +326,39 @@
     } completion:nil];
 }
 
-#pragma mark - Camera and CameraViewControllerDelegate
+#pragma mark - Camera, CameraViewControllerDelegate and ImageLibraryViewControllerDelegate
 
 - (void) cameraPressed:(UIBarButtonItem *) sender {
-    CameraViewController *cameraVC = [[CameraViewController alloc] init];
-    cameraVC.delegate = self;
+    UIViewController *imageVC;
     
-    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:cameraVC];
-    [self presentViewController:nav animated:YES completion:nil];
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
+        CameraViewController *cameraVC = [[CameraViewController alloc] init];
+        cameraVC.delegate = self;
+        imageVC = cameraVC;
+    } else if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeSavedPhotosAlbum]) {
+        ImageLibraryViewController *libVC = [[ImageLibraryViewController alloc] init];
+        libVC.delegate = self;
+        imageVC = libVC;
+    }
+    
+    if (imageVC) {
+        UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:imageVC];
+        [self presentViewController:nav animated:YES completion:nil];
+    }
 }
 
 - (void)cameraViewController:(CameraViewController *)cameraViewController didCompleteWithImage:(UIImage *)image {
     [cameraViewController dismissViewControllerAnimated:YES completion:^{
+        if (image) {
+            NSLog(@"Got an image!");
+        } else {
+            NSLog(@"Closed without an image!");
+        }
+    }];
+}
+
+- (void)imageLibraryViewController:(ImageLibraryViewController *)imageLibraryViewController didCompleteWithImage:(UIImage *)image {
+    [imageLibraryViewController dismissViewControllerAnimated:YES completion:^{
         if (image) {
             NSLog(@"Got an image!");
         } else {
