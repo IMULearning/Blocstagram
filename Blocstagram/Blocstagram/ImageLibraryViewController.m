@@ -43,13 +43,15 @@
     
     CGFloat width = CGRectGetWidth(self.view.frame);
     CGFloat minWidth = 100;
+    CGFloat gutter = 0.5;
     NSInteger divisor = width / minWidth;
-    CGFloat cellSize = width / divisor;
+    CGFloat distanceToCompensateForGutters = gutter * (divisor - 1) / divisor;
+    CGFloat cellSize = width / divisor - distanceToCompensateForGutters;
     
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.collectionViewLayout;
     flowLayout.itemSize = CGSizeMake(cellSize, cellSize);
-    flowLayout.minimumInteritemSpacing = 0;
-    flowLayout.minimumLineSpacing = 0;
+    flowLayout.minimumInteritemSpacing = gutter;
+    flowLayout.minimumLineSpacing = gutter;    
 }
 
 - (void)loadAssets {

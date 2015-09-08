@@ -16,6 +16,9 @@
 @property (nonatomic, strong) CropBox *cropBox;
 @property (nonatomic, assign) BOOL hasLoadedOnce;
 
+@property (nonatomic, strong) UIToolbar *topView;
+@property (nonatomic, strong) UIToolbar *bottomView;
+
 @end
 
 @implementation CropImageViewController
@@ -46,6 +49,16 @@
 
     self.automaticallyAdjustsScrollViewInsets = NO;
     self.view.backgroundColor = [UIColor colorWithWhite:0.8 alpha:1];
+    
+    self.topView = [UIToolbar new];
+    self.bottomView = [UIToolbar new];
+    UIColor *whiteBG = [UIColor colorWithWhite:1.0 alpha:.15];
+    self.topView.barTintColor = whiteBG;
+    self.bottomView.barTintColor = whiteBG;
+    self.topView.alpha = 0.5;
+    self.bottomView.alpha = 0.5;
+    [self.view addSubview:self.topView];
+    [self.view addSubview:self.bottomView];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -69,6 +82,10 @@
         self.scrollView.zoomScale = self.scrollView.minimumZoomScale;
         self.hasLoadedOnce = YES;
     }
+    
+    CGFloat width = CGRectGetWidth(self.view.frame);
+    self.topView.frame = CGRectMake(0, 0, width, CGRectGetMinY(self.cropBox.frame));
+    self.bottomView.frame = CGRectMake(0, CGRectGetMaxY(self.cropBox.frame), width, CGRectGetHeight(self.view.bounds) - CGRectGetMaxY(self.cropBox.frame));
 }
 
 #pragma mark - Button Target
