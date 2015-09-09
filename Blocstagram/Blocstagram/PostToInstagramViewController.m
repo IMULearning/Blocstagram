@@ -7,6 +7,7 @@
 //
 
 #import "PostToInstagramViewController.h"
+#import "FilterCollectionViewCell.h"
 
 @interface PostToInstagramViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIDocumentInteractionControllerDelegate>
 
@@ -77,7 +78,7 @@
         self.navigationItem.rightBarButtonItem = self.sendBarButton;
     }
     
-    [self.filterCollectionView registerClass:[UICollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
+    [self.filterCollectionView registerClass:[FilterCollectionViewCell class] forCellWithReuseIdentifier:@"cell"];
     
     self.view.backgroundColor = [UIColor whiteColor];
     self.filterCollectionView.backgroundColor = [UIColor whiteColor];
@@ -118,36 +119,12 @@
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
-    
-    static NSInteger imageViewTag = 1000;
-    static NSInteger labelTag = 1001;
-    
-    UIImageView *thumbnail = (UIImageView *)[cell.contentView viewWithTag:imageViewTag];
-    UILabel *label = (UILabel *)[cell.contentView viewWithTag:labelTag];
+    FilterCollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:@"cell" forIndexPath:indexPath];
     
     UICollectionViewFlowLayout *flowLayout = (UICollectionViewFlowLayout *)self.filterCollectionView.collectionViewLayout;
-    CGFloat thumbnailEdgeSize = flowLayout.itemSize.width;
-    
-    if (!thumbnail) {
-        thumbnail = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, thumbnailEdgeSize, thumbnailEdgeSize)];
-        thumbnail.contentMode = UIViewContentModeScaleAspectFill;
-        thumbnail.tag = imageViewTag;
-        thumbnail.clipsToBounds = YES;
-        
-        [cell.contentView addSubview:thumbnail];
-    }
-    
-    if (!label) {
-        label = [[UILabel alloc] initWithFrame:CGRectMake(0, thumbnailEdgeSize, thumbnailEdgeSize, 20)];
-        label.textAlignment = UITextAlignmentCenter;
-        label.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:10];
-        label.tag = labelTag;
-        [cell.contentView addSubview:label];
-    }
-    
-    thumbnail.image = self.filterImages[indexPath.row];
-    label.text = self.filterTitles[indexPath.row];
+    cell.edigeSize = flowLayout.itemSize.width;
+    cell.thumbnail.image = self.filterImages[indexPath.row];
+    cell.label.text = self.filterTitles[indexPath.row];
     
     return cell;
 }
@@ -313,6 +290,39 @@
             [composite setValue:darkScratchesImage forKey:kCIInputBackgroundImageKey];
             
             [self addCIImageToCollectionView:composite.outputImage withFilterTitle:NSLocalizedString(@"Film", @"Film Filter")];
+        }
+    }];
+    
+    // Addition: ColorClamp
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *filter = [CIFilter filterWithName:@"CIColorClamp" withInputParameters:@{
+                                                                                          @"inputImage": sourceCIImage,
+                                                                                          @"inputMinComponents": [CIVector vectorWithX:0.2 Y:0.2 Z:0.2 W:0.2],
+                                                                                          @"inputMaxComponents": [CIVector vectorWithX:0.8 Y:0.8 Z:0.8 W:0.8]
+                                                                                          }];
+        [self addCIImageToCollectionView:filter.outputImage withFilterTitle:NSLocalizedString(@"ColorClamp", @"ColorClamp Filter")];
+    }];
+    
+    // Addition: Alice
+    [self.photoFilterOperationQueue addOperationWithBlock:^{
+        CIFilter *filter1 = [CIFilter filterWithName:@"CITemperatureAndTint" withInputParameters:@{
+                                                                                          @"inputImage": sourceCIImage,
+                                                                                          @"inputNeutral": [CIVector vectorWithX:6000 Y:200],
+                                                                                          @"inputTargetNeutral": [CIVector vectorWithX:6400 Y:300]
+                                                                                          }];
+        if (filter1) {
+            CIImage *resultOfFilter1 = filter1.outputImage;
+            CIFilter *filter2 = [CIFilter filterWithName:@"CIToneCurve" withInputParameters:@{
+                                                                                                       @"inputImage": resultOfFilter1,
+                                                                                                       @"inputPoint0": [CIVector vectorWithX:0 Y:0],
+                                                                                                       @"inputPoint1": [CIVector vectorWithX:0.3 Y:0.3],
+                                                                                                       @"inputPoint2": [CIVector vectorWithX:0.5 Y:0.5],
+                                                                                                       @"inputPoint3": [CIVector vectorWithX:0.8 Y:0.8],
+                                                                                                       @"inputPoint4": [CIVector vectorWithX:1.0 Y:1.0]
+                                                                                                       }];
+            if (filter2) {
+                [self addCIImageToCollectionView:filter2.outputImage withFilterTitle:NSLocalizedString(@"Alice", @"Alice Filter")];
+            }
         }
     }];
 }
