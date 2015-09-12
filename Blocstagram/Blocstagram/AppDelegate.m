@@ -41,6 +41,7 @@
     }
     
     [self.window setRootViewController:navVC];
+    
     [self.window makeKeyAndVisible];
     
     return YES;
