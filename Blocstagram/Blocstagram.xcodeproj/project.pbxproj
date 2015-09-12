@@ -39,6 +39,7 @@
 		9A7C36BE1B9E628A00C5D425 /* CropBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7C36BD1B9E628A00C5D425 /* CropBox.m */; };
 		9A7C36C11B9E67FC00C5D425 /* CropImageViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7C36C01B9E67FC00C5D425 /* CropImageViewController.m */; };
 		9A7C36C41B9E6F0300C5D425 /* ImageLibraryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9A7C36C31B9E6F0300C5D425 /* ImageLibraryViewController.m */; };
+		9AAC90E61BA3E3C60083AD61 /* UserTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AAC90E51BA3E3C60083AD61 /* UserTests.m */; };
 		9ACD114F1B961B4800C9B75F /* MediaFullScreenViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9ACD114E1B961B4800C9B75F /* MediaFullScreenViewController.m */; };
 		BF9485DF1F7DA1F440A14F1F /* libPods-Blocstagram.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 3F3D27A9D7474EB24ED7DEBC /* libPods-Blocstagram.a */; };
 /* End PBXBuildFile section */
@@ -111,6 +112,7 @@
 		9A7C36C01B9E67FC00C5D425 /* CropImageViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropImageViewController.m; sourceTree = "<group>"; };
 		9A7C36C21B9E6F0300C5D425 /* ImageLibraryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ImageLibraryViewController.h; sourceTree = "<group>"; };
 		9A7C36C31B9E6F0300C5D425 /* ImageLibraryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ImageLibraryViewController.m; sourceTree = "<group>"; };
+		9AAC90E51BA3E3C60083AD61 /* UserTests.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserTests.m; sourceTree = "<group>"; };
 		9ACD114D1B961B4800C9B75F /* MediaFullScreenViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MediaFullScreenViewController.h; sourceTree = "<group>"; };
 		9ACD114E1B961B4800C9B75F /* MediaFullScreenViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MediaFullScreenViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -234,6 +236,7 @@
 			children = (
 				9A17532D1B8D145900A5A172 /* BlocstagramTests.m */,
 				9A17532B1B8D145900A5A172 /* Supporting Files */,
+				9AAC90E51BA3E3C60083AD61 /* UserTests.m */,
 			);
 			path = BlocstagramTests;
 			sourceTree = "<group>";
@@ -434,6 +437,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AAC90E61BA3E3C60083AD61 /* UserTests.m in Sources */,
 				9A17532E1B8D145900A5A172 /* BlocstagramTests.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
