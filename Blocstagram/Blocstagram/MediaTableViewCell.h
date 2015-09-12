@@ -27,6 +27,10 @@
 @property (nonatomic, strong, readonly) ComposeCommentView *commentView;
 @property (nonatomic, strong) UITraitCollection *overrideTraitCollection;
 
+@property (nonatomic, strong, readonly) UIImageView *mediaImageView;
+@property (nonatomic, strong, readonly) UILabel *usernameAndCaptionLabel;
+@property (nonatomic, strong, readonly) UILabel *commentLabel;
+
 + (CGFloat) heightForMediaItem:(Media *)mediaItem width:(CGFloat)width traitCollection:(UITraitCollection *)traitCollection;
 
 - (void) stopComposingComment;
