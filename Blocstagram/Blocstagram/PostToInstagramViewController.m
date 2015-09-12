@@ -90,6 +90,10 @@
     
     CGFloat edgeSize = MIN(CGRectGetWidth(self.view.frame), CGRectGetHeight(self.view.frame));
     
+    if (CGRectGetHeight(self.view.bounds) < edgeSize * 1.5) {
+        edgeSize /= 1.5;
+    }
+    
     self.previewImageView.frame = CGRectMake(0, self.topLayoutGuide.length, edgeSize, edgeSize);
     
     CGFloat buttonHeight = 50;
@@ -140,7 +144,7 @@
     
     if (!label) {
         label = [[UILabel alloc] initWithFrame:CGRectMake(0, thumbnailEdgeSize, thumbnailEdgeSize, 20)];
-        label.textAlignment = UITextAlignmentCenter;
+        label.textAlignment = NSTextAlignmentCenter;
         label.font = [UIFont fontWithName:@"HelveticaNeue-Medium" size:10];
         label.tag = labelTag;
         [cell.contentView addSubview:label];
