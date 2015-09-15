@@ -38,14 +38,21 @@
     self.doubleTap.numberOfTapsRequired = 2;
     [self.tap requireGestureRecognizerToFail:self.doubleTap];
     
-    self.tapToDismiss = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToDismissFired:)];
-    self.tapToDismiss.numberOfTapsRequired = 1;
-    self.tapToDismiss.cancelsTouchesInView = NO;
-    self.tapToDismiss.delegate = self;
-    [self.view.window addGestureRecognizer:self.tapToDismiss];
-    
     [self.scrollView addGestureRecognizer:self.tap];
     [self.scrollView addGestureRecognizer:self.doubleTap];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+    [super viewDidAppear:animated];
+    
+    self.tapToDismiss = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tapToDismissFired:)];
+    self.tapToDismiss.delegate = self;
+    [self.view.window addGestureRecognizer:self.tapToDismiss];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    [self.view.window removeGestureRecognizer:self.tapToDismiss];
+    [super viewWillDisappear:animated];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -139,7 +146,7 @@
 }
 
 - (void)tapToDismissFired:(UIGestureRecognizer *)sender {
-    NSLog(@"tapped");
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 
 - (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:(UIGestureRecognizer *)otherGestureRecognizer {
